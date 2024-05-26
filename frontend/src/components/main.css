@@ -1,0 +1,23 @@
+/* main.css */
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #00FFB7;    ;
+    --secondary-color: #DDFFF7;
+    --bg: #FFE5EC;
+    --pink: #F684A0;
+    --black: #000000;
+    --shadow: #636363;
+}
+  
+body {
+    margin: 0;
+    font-family: 'NanumSquare', sans-serif;
+    background-color: var(--bg);
+    color: var(--black);
+}
+
+html{
+    font-size: 62.5%;
+}
