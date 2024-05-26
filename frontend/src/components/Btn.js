@@ -11,6 +11,7 @@ const StyledBtn = styled.button`
   flex-shrink: 0;
   font-family: 'NanumSquare', sans-serif;
   font-size: 1.2rem;
+  background-color: ${(props) => (props.isClicked ? 'var(--secondary-color)' : 'var(--primary-color)')};
   ${(props) =>
     props.isClicked &&
     css`
@@ -45,7 +46,7 @@ const BtnText = styled.span`
     font-weight: 900;
   }
 `;
-const RadioButtonGroup = styled.div`
+const ToggleBtnsGroup = styled.div`
   display: flex;
   gap: 0.8rem;
 `;
@@ -57,7 +58,6 @@ const Btn = ({
   onClickFunction,
   title = "",
   defaultClick = false,
-  disabled = false,
 }) => {
   const [isClicked, setIsClicked] = useState(defaultClick);
 
@@ -95,49 +95,32 @@ const SendBtn = ({ text, originalColor = 'var(--pink)', onClickFunction }) => {
   );
 };
 
-
-
-
-
-
-const ToggleBtns = ({ text1, text2, onClickColor, originalColor, upperHandle }) => {
-  const [isClicked, setIsClicked] = useState(true);
-
-  const handleClick = (text) => {
-    if ((isClicked && text === text1) || (!isClicked && text === text2)) {
-      return;
-    }
-    setIsClicked(!isClicked);
-    upperHandle(text === text1 ? 'male' : 'female');
+const ToggleBtns = ({ text1, text2, value1, value2, upperHandle } ) => {
+  const [selectedValue, setSelectedValue] = useState(null);
+  const handleClick = (value) => {
+    setSelectedValue(value);
+    upperHandle(value);
   };
 
   return (
-    <RadioButtonGroup>
-      <Btn
-        text={text1}
-        onClickColor={onClickColor}
-        originalColor={isClicked ? onClickColor : originalColor}
-        onClickFunction={() => handleClick(text1)}
-        disabled={!isClicked}
-      />
-      <Btn
-        text={text2}
-        onClickColor={onClickColor}
-        originalColor={!isClicked ? onClickColor : originalColor}
-        onClickFunction={() => handleClick(text2)}
-        disabled={isClicked}
-      />
-    </RadioButtonGroup>
+    <ToggleBtnsGroup>
+      <StyledBtn
+        isClicked={selectedValue === value1}
+        onClick={() => handleClick(value1)}
+      >
+        <BtnText>{text1}</BtnText>
+      </StyledBtn>
+      <StyledBtn
+        isClicked={selectedValue === value2}
+        onClick={() => handleClick(value2)}
+      >
+        <BtnText>{text2}</BtnText>
+      </StyledBtn>
+    </ToggleBtnsGroup>
   );
 };
 
-ToggleBtns.propTypes = {
-  text1: PropTypes.string.isRequired,
-  text2: PropTypes.string.isRequired,
-  onClickColor: PropTypes.string,
-  originalColor: PropTypes.string,
-  upperHandle: PropTypes.func.isRequired,
-};
+
 
 Btn.propTypes = {
   text: PropTypes.string.isRequired,
@@ -146,7 +129,6 @@ Btn.propTypes = {
   onClickFunction: PropTypes.func,
   title: PropTypes.string,
   defaultClick: PropTypes.bool,
-  onClickTextColor: PropTypes.string,
 };
 
 export { Btn, SendBtn, ToggleBtns };
