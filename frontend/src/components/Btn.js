@@ -45,6 +45,10 @@ const BtnText = styled.span`
     font-weight: 900;
   }
 `;
+const RadioButtonGroup = styled.div`
+  display: flex;
+  gap: 0.8rem;
+`;
 
 const Btn = ({
   text,
@@ -53,20 +57,19 @@ const Btn = ({
   onClickFunction,
   title = "",
   defaultClick = false,
-  onClickTextColor = 'white'
+  disabled = false,
 }) => {
   const [isClicked, setIsClicked] = useState(defaultClick);
 
   const handleClick = () => {
-    setIsClicked((current) => !current);
-    if (onClickFunction) {
-      onClickFunction(title, text);
-    }
+      setIsClicked((current) => !current);
+      if (onClickFunction) {
+        onClickFunction(title, text);
+      }
   };
 
   const buttonStyle = {
     backgroundColor: isClicked ? onClickColor : originalColor,
-    color: isClicked ? onClickTextColor : 'black',
   };
 
   return (
@@ -94,6 +97,48 @@ const SendBtn = ({ text, originalColor = 'var(--pink)', onClickFunction }) => {
 
 
 
+
+
+
+const ToggleBtns = ({ text1, text2, onClickColor, originalColor, upperHandle }) => {
+  const [isClicked, setIsClicked] = useState(true);
+
+  const handleClick = (text) => {
+    if ((isClicked && text === text1) || (!isClicked && text === text2)) {
+      return;
+    }
+    setIsClicked(!isClicked);
+    upperHandle(text === text1 ? 'male' : 'female');
+  };
+
+  return (
+    <RadioButtonGroup>
+      <Btn
+        text={text1}
+        onClickColor={onClickColor}
+        originalColor={isClicked ? onClickColor : originalColor}
+        onClickFunction={() => handleClick(text1)}
+        disabled={!isClicked}
+      />
+      <Btn
+        text={text2}
+        onClickColor={onClickColor}
+        originalColor={!isClicked ? onClickColor : originalColor}
+        onClickFunction={() => handleClick(text2)}
+        disabled={isClicked}
+      />
+    </RadioButtonGroup>
+  );
+};
+
+ToggleBtns.propTypes = {
+  text1: PropTypes.string.isRequired,
+  text2: PropTypes.string.isRequired,
+  onClickColor: PropTypes.string,
+  originalColor: PropTypes.string,
+  upperHandle: PropTypes.func.isRequired,
+};
+
 Btn.propTypes = {
   text: PropTypes.string.isRequired,
   onClickColor: PropTypes.string,
@@ -104,4 +149,4 @@ Btn.propTypes = {
   onClickTextColor: PropTypes.string,
 };
 
-export { Btn, SendBtn };
+export { Btn, SendBtn, ToggleBtns };
