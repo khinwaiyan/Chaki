@@ -55,8 +55,8 @@ const Appearance = () => {
         <ToggleBtns
           text1="남"
           text2="여"
-          onClickColor="#90ee90"
-          originalColor="#d3d3d3"
+          onClickColor="var(--secondary-color)"
+          originalColor="var(--primary-color)"
           upperHandle={handleGenderSelection}
         />
         </ButtonGroup>
