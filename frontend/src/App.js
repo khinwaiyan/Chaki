@@ -14,16 +14,6 @@ const router = createBrowserRouter([
     path: '/',
     element: (
     <>
-      <Header />
-      <Btn />
-      <SendBtn />
-      <H1 content={"H1"}/>
-      <H2 content={"H2"}/>
-      <H1Bold content={"H1Bold"}/>
-      <H2Bold content={"H2Bold"}/>
-      <P1 content={"P1"}/>
-      <P2 content={"P2"}/>
-      <Footer />
     </>
     )
   }
