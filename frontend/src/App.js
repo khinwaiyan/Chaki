@@ -3,6 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
+import SelectLoveLanguagePage from './LoveLanguage/LoveLanguage';
 
 
 
@@ -10,8 +11,15 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
+
     <>
     </>
+    )
+  },
+  {
+    path: '/love-language',
+    element: (
+      <SelectLoveLanguagePage />
     )
   }
 ]);
