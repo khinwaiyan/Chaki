@@ -11,6 +11,7 @@ const StyledBtn = styled.button`
   flex-shrink: 0;
   font-family: 'NanumSquare', sans-serif;
   font-size: 1.2rem;
+  background-color: ${(props) => (props.isClicked ? 'var(--secondary-color)' : 'var(--primary-color)')};
   ${(props) =>
     props.isClicked &&
     css`
@@ -45,6 +46,10 @@ const BtnText = styled.span`
     font-weight: 900;
   }
 `;
+const ToggleBtnsGroup = styled.div`
+  display: flex;
+  gap: 0.8rem;
+`;
 
 const Btn = ({
   text,
@@ -53,20 +58,18 @@ const Btn = ({
   onClickFunction,
   title = "",
   defaultClick = false,
-  onClickTextColor = 'white'
 }) => {
   const [isClicked, setIsClicked] = useState(defaultClick);
 
   const handleClick = () => {
-    setIsClicked((current) => !current);
-    if (onClickFunction) {
-      onClickFunction(title, text);
-    }
+      setIsClicked((current) => !current);
+      if (onClickFunction) {
+        onClickFunction(title, text);
+      }
   };
 
   const buttonStyle = {
     backgroundColor: isClicked ? onClickColor : originalColor,
-    color: isClicked ? onClickTextColor : 'black',
   };
 
   return (
@@ -92,6 +95,31 @@ const SendBtn = ({ text, originalColor = 'var(--pink)', onClickFunction }) => {
   );
 };
 
+const ToggleBtns = ({ text1, text2, value1, value2, upperHandle } ) => {
+  const [selectedValue, setSelectedValue] = useState(null);
+  const handleClick = (value) => {
+    setSelectedValue(value);
+    upperHandle(value);
+  };
+
+  return (
+    <ToggleBtnsGroup>
+      <StyledBtn
+        isClicked={selectedValue === value1}
+        onClick={() => handleClick(value1)}
+      >
+        <BtnText>{text1}</BtnText>
+      </StyledBtn>
+      <StyledBtn
+        isClicked={selectedValue === value2}
+        onClick={() => handleClick(value2)}
+      >
+        <BtnText>{text2}</BtnText>
+      </StyledBtn>
+    </ToggleBtnsGroup>
+  );
+};
+
 
 
 Btn.propTypes = {
@@ -101,7 +129,6 @@ Btn.propTypes = {
   onClickFunction: PropTypes.func,
   title: PropTypes.string,
   defaultClick: PropTypes.bool,
-  onClickTextColor: PropTypes.string,
 };
 
-export { Btn, SendBtn };
+export { Btn, SendBtn, ToggleBtns };
