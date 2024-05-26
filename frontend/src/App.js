@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import './index.css'; 
 import { Header } from './components/Header';
-import { Btn, SendBtn } from './components/Btn';
 import { Footer } from './components/Footer';
 import { H1, H2, H1Bold, H2Bold, P1, P2 } from './components/Text';
 import Appearance from './page/Appearance';
@@ -38,6 +37,7 @@ const router = createBrowserRouter([
     <>
       <Header />
       <TextInput/>
+      <Footer />
     </>
     )
   }
