@@ -28,11 +28,9 @@ node_modules/
 
 # Gatsby files
 .cache/
-public
 
 # Gridsome files
 .cache/
-public
 
 # Misc
 .DS_Store
