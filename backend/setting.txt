@@ -1,0 +1,7 @@
+node -v
+  If it's not installed -> brew install node
+npm -v
+
+in server folder (cd server or mkdir server)
+  npm init -y
+  npm install express axios body-parser cors dotenv
