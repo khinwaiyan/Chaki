@@ -5,4 +5,4 @@ npm -v
 in server folder (cd server or mkdir server)
   npm init -y
   npm install express axios body-parser cors dotenv
-EDIT .env file key
+
