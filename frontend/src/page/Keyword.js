@@ -120,6 +120,8 @@ const Keyword = () => {
        
         if (data.imageUrl) {
           setImageUrl(data.imageUrl); // check url
+          //navigate('/결과창', { state: { imageUrl: data.imageUrl } });
+          //위에 결과넣으면 아마도!!! 링크가 갈 것 같다, app.js에 결과창 구현 필요
         }
       } catch (error) {
         console.error('Error sending data:', error);
