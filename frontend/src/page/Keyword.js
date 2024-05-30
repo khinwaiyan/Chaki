@@ -121,7 +121,15 @@ const Keyword = () => {
         if (data.imageUrl) {
           setImageUrl(data.imageUrl); // check url
           //navigate('/결과창', { state: { imageUrl: data.imageUrl } });
-          //위에 결과넣으면 아마도!!! 링크가 갈 것 같다, app.js에 결과창 구현 필요
+          /*
+          위에 결과넣으면 아마도!!! 링크가 갈 것 같다, app.js에 결과창 구현 필요
+
+          결과 창에서 아래 처럼하면 imageUrl 에 주소가 저장된다.
+          const location = useLocation();
+          const { imageUrl } = location.state || {};
+
+          잘 될지 모르겠어......
+          */
         }
       } catch (error) {
         console.error('Error sending data:', error);
