@@ -29,10 +29,27 @@ const Appearance = () => {
   const [selectedGender, setSelectedGender] = useState(null);
   const navigate = useNavigate();
 
-
-  const handleGenderSelection = (gender) => {
+  //선택 성별 서버로 보냄
+  const handleGenderSelection = async (gender) => {
     setSelectedGender(gender);
     console.log(`Selected gender: ${gender}`);
+        // Send gender to server
+        try {
+          const response = await fetch('http://localhost:5001/api/gender', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ gender }),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+        } catch (error) {
+          console.error('There was a problem with the fetch operation:', error);
+        }
   };
 
   const handleNavigation = (path) => {
@@ -49,8 +66,8 @@ const Appearance = () => {
         <ToggleBtns
           text1="남"
           text2="여"
-          value1="male"
-          value2="female"
+          value1="남자"
+          value2="여자"
           upperHandle={handleGenderSelection}
         />
         </ButtonGroup>
