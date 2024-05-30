@@ -70,6 +70,9 @@ const ButtonContainer = ({ title, children }) => (
 );
 
 const Keyword = () => {
+  
+  let reReq = false;
+  
   const [selectedValues, setSelectedValues] = useState({
     //한국어로 변경
     얼굴형: [],
@@ -102,23 +105,26 @@ const Keyword = () => {
    
     const dataToSend = `${title}: ${description}`;
 
-    try {
-      const response = await fetch('http://localhost:5001/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data: dataToSend }),
-      });
-
-      const data = await response.json();//여기에 Image URL 이 저장된다.
-     
-      if (data.imageUrl) {
-        setImageUrl(data.imageUrl); // check url
+    if(!reReq){
+      try {
+        reReq = true;
+        const response = await fetch('http://localhost:5001/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ data: dataToSend }),
+        });
+  
+        const data = await response.json();//여기에 Image URL 이 저장된다.
+       
+        if (data.imageUrl) {
+          setImageUrl(data.imageUrl); // check url
+        }
+      } catch (error) {
+        console.error('Error sending data:', error);
       }
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
+    } 
   };
 
   return (
