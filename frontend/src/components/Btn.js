@@ -46,6 +46,43 @@ const BtnText = styled.span`
     font-weight: 900;
   }
 `;
+
+const BtnTitleText = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  @media (min-width: 1024px) {
+    padding: 2rem;
+    gap: 2rem;
+    font-size: 2.4rem;
+    font-weight: 900;
+  }
+`;
+
+const BtnBodyText = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  padding-bottom: 1.2rem;
+  // padding: 1.2rem;
+  gap: 1rem;
+  font-size: 1.3rem;
+
+  @media screen and (min-width: 1024px) {
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+    font-size: 1.7rem;
+  }
+`;
+
 const ToggleBtnsGroup = styled.div`
   display: flex;
   gap: 0.8rem;
@@ -79,6 +116,29 @@ const Btn = ({
       isClicked={isClicked}
     >
       <BtnText>{text}</BtnText>
+    </StyledBtn>
+  );
+};
+
+const BtnWithBody = ({title, text, onClickColor = 'var(--secondary-color)',
+originalColor = 'var(--primary-color)', defaultClick = false, onClickFunction}) => {
+  const [isClicked, setIsClicked] = useState(defaultClick);
+
+  const handleClick = () => {
+    setIsClicked((current) => !current);
+    if (onClickFunction) {
+      onClickFunction(title, text);
+    }
+  };
+
+  const buttonStyle = {
+    backgroundColor: isClicked ? onClickColor : originalColor,
+  };
+
+  return (
+    <StyledBtn onClick={handleClick} style={buttonStyle} isClicked={isClicked}>
+        <BtnTitleText>{title}</BtnTitleText>
+        <BtnBodyText>{text}</BtnBodyText>
     </StyledBtn>
   );
 };
@@ -122,6 +182,7 @@ const ToggleBtns = ({ text1, text2, value1, value2, upperHandle } ) => {
 
 
 
+
 Btn.propTypes = {
   text: PropTypes.string.isRequired,
   onClickColor: PropTypes.string,
@@ -131,4 +192,4 @@ Btn.propTypes = {
   defaultClick: PropTypes.bool,
 };
 
-export { Btn, SendBtn, ToggleBtns };
+export { Btn, SendBtn, ToggleBtns, BtnWithBody };
