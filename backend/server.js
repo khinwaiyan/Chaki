@@ -55,6 +55,47 @@ app.post('/api/generate', async (req, res) => {
       }
     }
 });
+//test 로 입력 받은 것
+app.post('/api/generateText', async (req, res) => {
+  const { description } = req.body;
+  const imageDescription = `${description} 를 만족하는 ${selectedGender} 한 명의 사진`;
+  /* 위에 설명을 수정 할 필요가 있음*/
+  console.log('Received data from client fixed:', imageDescription);
+  try {
+
+    //openai api를 막음 
+    /*
+    const response = await axios.post(
+      'https://api.openai.com/v1/images/generations',
+      {
+        model: 'dall-e-3', 
+        prompt: description,
+        n: 1,  
+        size: "1024x1024"
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+
+    const imageUrl = response.data.data[0].url;
+    res.json({ imageUrl });
+    
+    */
+    res.sendStatus(200);// 임시: api 사용시 삭제
+  }  catch (error) {
+      console.error('Error generating image:', error.response ? error.response.data : error.message);
+      if (!res.headersSent) {
+        res.status(500).json({ error: error.response ? error.response.data : error.message });
+      }
+    }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
