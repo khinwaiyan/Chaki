@@ -3,7 +3,7 @@ import { useState } from "react";
 import { H1Bold, H2, H2Bold } from "../components/Text";
 import { ImageContainer } from "../components/Image";
 import { SendBtn } from "../components/Btn";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
     padding: 6rem;
@@ -45,6 +45,8 @@ const ImageGroup = styled.div`
 export default function ImageGeneration() {
     const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    // console.log(`Selected language: ${language} - ${description}`);
 
     const handleImageSelection = (image) => {
         setSelectedImage(image);
@@ -52,8 +54,15 @@ export default function ImageGeneration() {
     }
 
     const handleNavigation = () => {
-        console.log(`Selected image: ${selectedImage}`);
-        navigate('/result');
+        if (selectedImage === null) {
+            alert("이상형 이미지를 선택해주세요.");
+            return;
+        } else {
+            const language = location.state.language;
+            const description = location.state.description;
+            console.log(`Selected image: ${selectedImage}`);
+            navigate('/result', { state: { selectedImage, language, description } });
+        }  
     }
 
     // TODO: Replace with actual image URLs from backend

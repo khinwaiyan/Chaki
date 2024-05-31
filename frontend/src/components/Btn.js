@@ -129,7 +129,9 @@ const BtnWithBody = ({
   // const [isClicked, setIsClicked] = useState(null);
 
   const handleClick = () => {
-    onClick(title);
+    if (onClick) {
+      onClick(title, text);
+    }
   };
 
   const buttonStyle = {

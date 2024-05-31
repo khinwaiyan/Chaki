@@ -36,8 +36,10 @@ const ImageContainer = ({ imageUrl, isSelected, handleImageSelection }) => {
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     const handleClick = () => {
-        setIsClicked(!isClicked);
-        handleImageSelection(imageUrl);
+        if (handleImageSelection) {
+            setIsClicked(!isClicked);
+            handleImageSelection(imageUrl);
+        }
     }
 
     useEffect(() => {

@@ -50,20 +50,27 @@ const ButtonGroup = styled.div`
 
 export default function LoveLanguage() {
     const [selectLanguage, setSelectLanguage] = useState(null);
+    const [selectLanguageDescription, setSelectLanguageDescription] = useState(null);
     const navigate = useNavigate();
 
-    const handleLanguageSelection = (language) => {
+    const handleLanguageSelection = (language, description) => {
         setSelectLanguage(language);
-        console.log(`Selected language: ${language}`);
+        setSelectLanguageDescription(description);
+        console.log(`Selected language: ${language} - ${description}`);
     }
 
-    const handleNavigation = (path) => {
-        navigate(path);
-    };
+    // const handleNavigation = (path) => {
+    //     navigate(path);
+    // };
 
     const handleSendData = () => {
         console.log(`Selected language: ${selectLanguage}`);
-        handleNavigation('/generate');
+        if (selectLanguage === null) {
+            alert("사랑의 언어를 선택해주세요.");
+            return;
+        }
+
+        navigate('/generate', { state: { 'language': selectLanguage, 'description': selectLanguageDescription } });
 
     };
 

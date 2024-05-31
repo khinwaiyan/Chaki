@@ -11,6 +11,7 @@ import Keyword from './page/Keyword';
 import TextInput from './page/TextInput';
 import LoveLanguage from './page/LoveLanguage';
 import ImageGeneration from './page/ImageGeneration';
+import Result from './page/Result';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,16 @@ const router = createBrowserRouter([
         {/* <Footer /> */}
       </>
     )
+  },
+  {
+    path: '/result',
+    element: (
+      <>
+        <Header />
+        <Result />
+      </>
+    )
+  
   }
   
 ]);
