@@ -17,7 +17,7 @@ const ContentWrapper = styled.div`
 `;
 
 const ButtonGroup = styled.div`
-display: flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   margin: 2rem 0;
@@ -63,7 +63,7 @@ export default function LoveLanguage() {
 
     const handleSendData = () => {
         console.log(`Selected language: ${selectLanguage}`);
-        handleNavigation('/textinput');
+        handleNavigation('/generate');
 
     };
 
