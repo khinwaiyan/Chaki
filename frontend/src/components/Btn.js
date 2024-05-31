@@ -11,6 +11,7 @@ const StyledBtn = styled.button`
   flex-shrink: 0;
   font-family: 'NanumSquare', sans-serif;
   font-size: 1.2rem;
+  padding: ${(props) => (props.toggled ? '0' : '1rem')};
   background-color: ${(props) => (props.isClicked ? 'var(--secondary-color)' : 'var(--primary-color)')};
   ${(props) =>
     props.isClicked &&
@@ -52,6 +53,7 @@ const BtnTitleText = styled.span`
   justify-content: center;
   align-items: center;
   padding: 1.2rem;
+  background-color: ${(props) => (props.isClicked ? 'var(--pink)' : 'var(--primary-color)')};
   gap: 1rem;
   font-size: 1.5rem;
   font-weight: 800;
@@ -67,18 +69,13 @@ const BtnBodyText = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  padding-bottom: 1.2rem;
-  // padding: 1.2rem;
+  padding: 1.2rem;
   gap: 1rem;
   font-size: 1.3rem;
-
+  background-color: ${(props) => (props.isClicked ? 'var(--bg)' : 'var(--secondary-color)')};
   @media screen and (min-width: 1024px) {
     gap: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-bottom: 2rem;
+    padding: 2rem;
     font-size: 1.5rem;
   }
 `;
@@ -140,9 +137,9 @@ const BtnWithBody = ({
   };
 
   return (
-    <StyledBtn onClick={handleClick} style={buttonStyle} isClicked={isSelected}>
-        <BtnTitleText>{title}</BtnTitleText>
-        <BtnBodyText>{text}</BtnBodyText>
+    <StyledBtn onClick={handleClick} style={buttonStyle} isClicked={isSelected} toggled={true}>
+        <BtnTitleText isClicked={isSelected}>{title}</BtnTitleText>
+        <BtnBodyText isClicked={isSelected}>{text}</BtnBodyText>
     </StyledBtn>
   );
 };
