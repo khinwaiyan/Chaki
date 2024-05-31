@@ -58,7 +58,7 @@ const BtnTitleText = styled.span`
   @media (min-width: 1024px) {
     padding: 2rem;
     gap: 2rem;
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 900;
   }
 `;
@@ -79,7 +79,7 @@ const BtnBodyText = styled.span`
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 2rem;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -120,23 +120,27 @@ const Btn = ({
   );
 };
 
-const BtnWithBody = ({title, text, onClickColor = 'var(--secondary-color)',
-originalColor = 'var(--primary-color)', defaultClick = false, onClickFunction}) => {
-  const [isClicked, setIsClicked] = useState(defaultClick);
+// Langugage button with body text
+const BtnWithBody = ({
+  title, 
+  text, 
+  onClickColor = 'var(--secondary-color)', 
+  originalColor = 'var(--primary-color)', 
+  onClick,
+  isSelected
+}) => {
+  // const [isClicked, setIsClicked] = useState(null);
 
   const handleClick = () => {
-    setIsClicked((current) => !current);
-    if (onClickFunction) {
-      onClickFunction(title, text);
-    }
+    onClick(title);
   };
 
   const buttonStyle = {
-    backgroundColor: isClicked ? onClickColor : originalColor,
+    backgroundColor: isSelected ? onClickColor : originalColor,
   };
 
   return (
-    <StyledBtn onClick={handleClick} style={buttonStyle} isClicked={isClicked}>
+    <StyledBtn onClick={handleClick} style={buttonStyle} isClicked={isSelected}>
         <BtnTitleText>{title}</BtnTitleText>
         <BtnBodyText>{text}</BtnBodyText>
     </StyledBtn>
