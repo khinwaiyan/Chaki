@@ -86,7 +86,7 @@ export default function LoveLanguage() {
                     <BtnWithBody title="선물" text="작은 선물이나 기념품을 주고받으며 사랑을 표현한다." onClick={handleLanguageSelection} isSelected={selectLanguage === '선물'} />
                     <BtnWithBody title="스킨십" text="포옹, 손잡기 등 신체적 접촉을 통해 애정을 표현한다." onClick={handleLanguageSelection} isSelected={selectLanguage === '스킨십'} />
                     <BtnWithBody title="인정하는 말" text="상대방에게 칭찬이나 긍정적인 말을 통해 사랑을 표현한다." onClick={handleLanguageSelection} isSelected={selectLanguage === '인정하는 말'} />
-                    <BtnWithBody title="함께하는 시간" text="질적으로 높은 시간을 함께 보내는 것을 중시한다." onClick={handleLanguageSelection} isSelected={selectLanguage === '함께하는 시간'} />
+                    <BtnWithBody title="함께하는 시간" text="질적으로 높은 시간을 함께 보내는 것을 중시한다." onClick={handleLanguageSelection} isSelected={selectLanguage === "함께하는 시간"} />
                 </ButtonGroup>
                 <SendBtn text="선택 완료" onClickFunction={handleSendData} />
             </ContentWrapper>
