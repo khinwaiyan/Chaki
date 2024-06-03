@@ -46,14 +46,40 @@ const ButtonContainer = styled.div`
 
 const TextInput = () => {
   const [inputText, setInputText] = useState("");
+  //const navigate = useNavigate();
+
+  let reReq = false;
+
+
+  
 
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
-
   const handleClick = () => {
     console.log("Button clicked!");
   };
+  // const handleClick = async () => {
+  //   if(!sendreq){
+  //     try {
+  //       sendreq = true;
+  //       const response = await fetch('http://localhost:5001/api/generateText', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ description: inputText }),
+  //       });
+
+  //       const data = await response.json();
+  //       if (data.imageUrl) {
+  //         navigate('/result', { state: { imageUrl: data.imageUrl } });
+  //       }
+  //     } catch (error) {
+  //       console.error('Error sending data:', error);
+  //     }
+  //   }  
+  // };
 
   return (
     <StyledTextInput>

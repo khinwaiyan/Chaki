@@ -11,6 +11,7 @@ const StyledBtn = styled.button`
   flex-shrink: 0;
   font-family: 'NanumSquare', sans-serif;
   font-size: 1.2rem;
+  padding: ${(props) => (props.toggled ? '0' : '1rem')};
   background-color: ${(props) => (props.isClicked ? 'var(--secondary-color)' : 'var(--primary-color)')};
   ${(props) =>
     props.isClicked &&
@@ -46,6 +47,39 @@ const BtnText = styled.span`
     font-weight: 900;
   }
 `;
+
+const BtnTitleText = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  background-color: ${(props) => (props.isClicked ? 'var(--pink)' : 'var(--primary-color)')};
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  @media (min-width: 1024px) {
+    padding: 2rem;
+    gap: 2rem;
+    font-size: 2rem;
+    font-weight: 900;
+  }
+`;
+
+const BtnBodyText = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  gap: 1rem;
+  font-size: 1.3rem;
+  background-color: ${(props) => (props.isClicked ? 'var(--bg)' : 'var(--secondary-color)')};
+  @media screen and (min-width: 1024px) {
+    gap: 2rem;
+    padding: 2rem;
+    font-size: 1.5rem;
+  }
+`;
+
 const ToggleBtnsGroup = styled.div`
   display: flex;
   gap: 0.8rem;
@@ -79,6 +113,35 @@ const Btn = ({
       isClicked={isClicked}
     >
       <BtnText>{text}</BtnText>
+    </StyledBtn>
+  );
+};
+
+// Langugage button with body text
+const BtnWithBody = ({
+  title, 
+  text, 
+  onClickColor = 'var(--secondary-color)', 
+  originalColor = 'var(--primary-color)', 
+  onClick,
+  isSelected
+}) => {
+  // const [isClicked, setIsClicked] = useState(null);
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick(title, text);
+    }
+  };
+
+  const buttonStyle = {
+    backgroundColor: isSelected ? onClickColor : originalColor,
+  };
+
+  return (
+    <StyledBtn onClick={handleClick} style={buttonStyle} isClicked={isSelected} toggled={true}>
+        <BtnTitleText isClicked={isSelected}>{title}</BtnTitleText>
+        <BtnBodyText isClicked={isSelected}>{text}</BtnBodyText>
     </StyledBtn>
   );
 };
@@ -122,6 +185,7 @@ const ToggleBtns = ({ text1, text2, value1, value2, upperHandle } ) => {
 
 
 
+
 Btn.propTypes = {
   text: PropTypes.string.isRequired,
   onClickColor: PropTypes.string,
@@ -131,4 +195,4 @@ Btn.propTypes = {
   defaultClick: PropTypes.bool,
 };
 
-export { Btn, SendBtn, ToggleBtns };
+export { Btn, SendBtn, ToggleBtns, BtnWithBody };

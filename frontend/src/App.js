@@ -6,10 +6,12 @@ import {
 import './index.css'; 
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { H1, H2, H1Bold, H2Bold, P1, P2 } from './components/Text';
 import Appearance from './page/Appearance';
 import Keyword from './page/Keyword';
 import TextInput from './page/TextInput';
+import LoveLanguage from './page/LoveLanguage';
+import ImageGeneration from './page/ImageGeneration';
+import Result from './page/Result';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +42,37 @@ const router = createBrowserRouter([
       <Footer />
     </>
     )
+  },
+  {
+    path: '/lovelanguage',
+    element: (
+      <>
+        <Header />
+        <LoveLanguage />
+      </>
+    )
+  },
+  {
+    path: '/generate',
+    element: (
+      <>
+        <Header />
+        <ImageGeneration />
+        {/* <Footer /> */}
+      </>
+    )
+  },
+  {
+    path: '/result',
+    element: (
+      <>
+        <Header />
+        <Result />
+      </>
+    )
+  
   }
+  
 ]);
 
 function App() {

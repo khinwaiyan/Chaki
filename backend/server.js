@@ -10,46 +10,59 @@ const app = express();
 const port = process.env.PORT || 5001;
 const apiKey = process.env.OPENAI_API_KEY;
 
+let selectedGender = null;
+
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static('public'));
 
+// Route to receive and store gender
+app.post('/api/gender', (req, res) => {
+  const { gender } = req.body;
+  selectedGender = gender;
+  console.log('Received gender:', gender);
+  res.sendStatus(200); 
+});
+
+// Function to generate a single image
+const generateImage = async (description) => {
+  const response = await axios.post(
+    'https://api.openai.com/v1/images/generations',
+    {
+      model: 'dall-e-3', 
+      prompt: description,
+      n: 1,  
+      size: "1024x1024"
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+  return response.data.data[0].url;
+}
+
+// Route to receive description and generate images
 app.post('/api/generate', async (req, res) => {
-  const { description } = req.body;
+  const { data } = req.body; 
+  const description = `${data} 를 만족하는 ${selectedGender} 한 명의 사진`;
+  console.log('Received data from client:', description);
 
   try {
-    const response = await axios.post(
-      'https://api.openai.com/v1/images/generations',
-      {
-        model: 'dall-e-3', 
-        prompt: description,
-        n: 1,  
-        size: "1024x1024"
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    const imageUrl1 = await generateImage(description);
+    const imageUrl2 = await generateImage(description);
 
-  
-    const imageUrls = response.data.data.map(image => image.url);
-    res.json({ imageUrls });
+    res.json({ imageUrls: [imageUrl1, imageUrl2] });
+    
   } catch (error) {
-    console.error('Error generating image:', error.response ? error.response.data : error.message);
+    console.error('Error generating images:', error.response ? error.response.data : error.message);
     if (!res.headersSent) {
       res.status(500).json({ error: error.response ? error.response.data : error.message });
     }
   }
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
-
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
