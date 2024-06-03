@@ -31,33 +31,12 @@ const ButtonWrap = styled.div`
 const ButtonContainerWrapper = styled.div`
   display: flex;
   gap: 1rem;
-  overflow-x: auto;
+  flex-wrap: nowrap; 
 
-  &::-webkit-scrollbar {
-    width: 5px;
-    height: 20px;
-
-    @media (min-width: 1024px) {
-      width: 1rem;
-      height: 4rem;
-    }
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 5px solid transparent;
-
-    @media (min-width: 1024px) {
-      border-radius: 2rem;
-      border: 1rem solid transparent;
-    }
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(220, 20, 60, .1);
-  }
+`;
+const StyledButton = styled(Btn)`
+  flex: 1 1 auto;
+  min-width: 0; 
 `;
 
 const ButtonContainer = ({ title, children }) => (
@@ -70,21 +49,20 @@ const ButtonContainer = ({ title, children }) => (
 );
 
 const Keyword = () => {
-  
   let reReq = false;
   
   const [selectedValues, setSelectedValues] = useState({
-    //한국어로 변경
     얼굴형: [],
     피부색: [],
     눈: [],
     헤어: [],
     기타: [],
   });
+  
   const title = "외모 조건";
   const [imageUrl, setImageUrl] = useState('');
+  const navigate = useNavigate();
 
-  
   const handleButtonClick = (key, value) => {
     setSelectedValues((current) => {
       const newValues = { ...current };
@@ -102,7 +80,6 @@ const Keyword = () => {
       .map(([key, values]) => `${key}: ${values.join(', ')}`)
       .join('; ');
 
-   
     const dataToSend = `${title}: ${description}`;
 
     if(!reReq){
@@ -116,20 +93,11 @@ const Keyword = () => {
           body: JSON.stringify({ data: dataToSend }),
         });
   
-        const data = await response.json();//여기에 Image URL 이 저장된다.
+        const data = await response.json();
        
         if (data.imageUrl) {
-          setImageUrl(data.imageUrl); // check url
-          //navigate('/결과창', { state: { imageUrl: data.imageUrl } });
-          /*
-          위에 결과넣으면 아마도!!! 링크가 갈 것 같다, app.js에 결과창 구현 필요
-
-          결과 창에서 아래 처럼하면 imageUrl 에 주소가 저장된다.
-          const location = useLocation();
-          const { imageUrl } = location.state || {};
-
-          잘 될지 모르겠어......
-          */
+          setImageUrl(data.imageUrl);
+          navigate('/lovelanguage');
         }
       } catch (error) {
         console.error('Error sending data:', error);
@@ -239,13 +207,6 @@ const Keyword = () => {
         </ButtonContainer>
       </ButtonWrap>
       <SendBtn text="선택 완료" onClickFunction={handleSendData} />
-            {/* 임시 이미지를 표시 하는 코드 */}
-      {imageUrl && (
-        <div>
-          <H2 content="Generated Image" />
-          <img src={imageUrl} alt="Generated" style={{ maxWidth: '100%', marginTop: '20px' }} />
-        </div>
-      )}
     </MainBody>
   );
 };
