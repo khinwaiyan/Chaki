@@ -55,7 +55,8 @@ app.post('/api/generate', async (req, res) => {
       }
     }
 });
-//test 로 입력 받은 것
+
+//text 로 입력 받은 것
 app.post('/api/generateText', async (req, res) => {
   const { description } = req.body;
   const imageDescription = `${description} 를 만족하는 ${selectedGender} 한 명의 사진`;
@@ -63,8 +64,7 @@ app.post('/api/generateText', async (req, res) => {
   console.log('Received data from client fixed:', imageDescription);
   try {
 
-    //openai api를 막음 
-    /*
+    
     const response = await axios.post(
       'https://api.openai.com/v1/images/generations',
       {
@@ -84,9 +84,6 @@ app.post('/api/generateText', async (req, res) => {
 
     const imageUrl = response.data.data[0].url;
     res.json({ imageUrl });
-    
-    */
-    res.sendStatus(200);// 임시: api 사용시 삭제
   }  catch (error) {
       console.error('Error generating image:', error.response ? error.response.data : error.message);
       if (!res.headersSent) {
