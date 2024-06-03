@@ -239,7 +239,7 @@ const Keyword = () => {
         </ButtonContainer>
       </ButtonWrap>
       <SendBtn text="선택 완료" onClickFunction={handleSendData} />
-            //임시 이미지를 표시 하는 코드
+            {/* 임시 이미지를 표시 하는 코드 */}
       {imageUrl && (
         <div>
           <H2 content="Generated Image" />
