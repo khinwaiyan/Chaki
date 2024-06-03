@@ -43,32 +43,32 @@ const ImageGroup = styled.div`
 
 export default function ImageGeneration() {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const fetchImage = async () => {
+    const fetchImages = async () => {
       try {
         const response = await axios.post('http://localhost:5001/api/generate', {
           data: location.state.description
         });
-        if (response.data && response.data.imageUrl) {
-          setImageUrl(response.data.imageUrl);
+        if (response.data && response.data.imageUrls) {
+          setImageUrls(response.data.imageUrls);
         } else {
-          setImageUrl(''); // Set to empty string if response does not have imageUrl
+          setImageUrls([]); // Set to empty array if response does not have imageUrls
         }
       } catch (error) {
-        console.error('Error fetching image:', error.response ? error.response.data : error.message);
-        alert('Failed to fetch image from the backend.');
-        setImageUrl(''); // Set to empty string on error
+        console.error('Error fetching images:', error.response ? error.response.data : error.message);
+        alert('Failed to fetch images from the backend.');
+        setImageUrls([]); // Set to empty array on error
       }
     };
 
-    fetchImage();
+    fetchImages();
   }, [location.state.description]);
 
-  const handleImageSelection = () => {
+  const handleImageSelection = (imageUrl) => {
     setSelectedImage(imageUrl);
     console.log(`Selected image: ${imageUrl}`);
   }
@@ -92,13 +92,16 @@ export default function ImageGeneration() {
       <ContentWrapper>
         <H2 content="가장 마음에 드는 것을 골라주세요." />
         <ImageGroup>
-          {imageUrl ? (
-            <ImageContainer
-              handleImageSelection={handleImageSelection}
-              isSelected={selectedImage === imageUrl}
-              imageUrl={imageUrl} />
+          {imageUrls.length > 0 ? (
+            imageUrls.map((url, index) => (
+              <ImageContainer
+                key={index}
+                handleImageSelection={handleImageSelection}
+                isSelected={selectedImage === url}
+                imageUrl={url} />
+            ))
           ) : (
-            <p>Loading image...</p>
+            <p>Loading images...</p>
           )}
         </ImageGroup>
         <div style={{ padding: '2rem' }}>
