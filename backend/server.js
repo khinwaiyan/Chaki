@@ -46,7 +46,8 @@ const generateImage = async (description) => {
 // Route to receive description and generate images
 app.post('/api/generate', async (req, res) => {
   const { data } = req.body; 
-  const description = `${data} 를 만족하는 ${selectedGender} 한 명의 사진`;
+  const stringData = stringFormat(data);
+  const description = `${stringData} 를 만족하는 ${selectedGender} 한 명의 사진`;
   console.log('Received data from client:', description);
 
   try {
@@ -62,6 +63,11 @@ app.post('/api/generate', async (req, res) => {
     }
   }
 });
+
+//json format to String 
+const stringFormat = (data) =>{
+ return Object.entries(data).map(([key, values]) => `${key}: ${values.join(', ')}`).join(', ');
+} 
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
