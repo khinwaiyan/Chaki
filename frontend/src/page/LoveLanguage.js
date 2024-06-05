@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { H1, H2, H2Bold } from '../components/Text';
+import { H1, H2, H1Bold, H2Bold } from '../components/Text';
 import { BtnWithBody, SendBtn } from '../components/Btn';
 import axios from 'axios';
 
@@ -15,6 +15,7 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+padding: 2rem 0;
 `;
 
 const ButtonGroup = styled.div`
@@ -94,10 +95,11 @@ export default function LoveLanguage() {
 
     return (
         <Wrapper>
-            <H2Bold content="STEP 2." />
-            <H1 content="원하는 이상형의 연애 성향는?" />
+            <H1Bold content="STEP 2." />
+            <H2Bold content="원하는 이상형의 연애 성향은?" />
             <ContentWrapper>
-                <H2 content="사랑의 다섯 가지 언어 중에서 상대방에게 바라는 것을 선택해 주세요." />
+                <H1 content="당신은 언제 연인에게 가장 사랑받는다고 느끼나요?" />
+                <H2 content="5가지 사랑의 언어 중에서 상대방에게 바라는 것을 선택해 주세요." />
                 <ButtonGroup>
                     <BtnWithBody title="봉사" text="상대방을 위해 무언가를 도와줌으로써 사랑을 나타낸다." onClick={() => handleLanguageSelection('봉사', '상대방을 위해 무언가를 도와줌으로써 사랑을 나타낸다.')} isSelected={selectLanguage === '봉사'} />
                     <BtnWithBody title="선물" text="작은 선물이나 기념품을 주고받으며 사랑을 표현한다." onClick={() => handleLanguageSelection('선물', '작은 선물이나 기념품을 주고받으며 사랑을 표현한다.')} isSelected={selectLanguage === '선물'} />
