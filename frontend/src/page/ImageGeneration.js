@@ -64,11 +64,11 @@ export default function ImageGeneration() {
 
   return (
     <Wrapper>
-      <H2Bold content="STEP 3." />
-      <H1Bold content="이상형 이미지 생성" />
+      <H1Bold content="STEP 3." />
+      <H2Bold content="이상형 이미지 후보 생성" />
       <ContentWrapper>
-        <H2 content="가장 마음에 드는 것을 골라주세요." />
-        <ImageGroup>
+      <H2 content="가장 마음에 드는 이미지를 선택해 주세요." />
+      <ImageGroup>
           {imageUrls.length > 0 ? (
             imageUrls.map((url, index) => (
               <ImageContainer

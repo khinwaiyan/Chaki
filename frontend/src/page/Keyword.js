@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { H1, H2 } from "../components/Text";
+import { H1, H2, H2Bold, P1, P2 } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { Btn, SendBtn } from "../components/Btn";
 import styled from 'styled-components';
+
 
 const MainBody = styled.section`
   display: flex;
@@ -49,6 +50,7 @@ const ButtonContainer = ({ title, children }) => (
 );
 
 const Keyword = () => {
+  let rereq = false;
   const [selectedValues, setSelectedValues] = useState({
     얼굴형: [],
     피부색: [],
@@ -80,9 +82,9 @@ const Keyword = () => {
     console.log(JSON.stringify(selectedValues));
     navigate('/lovelanguage');  
 
-    if(!sendreq){
+    if(!rereq){
       try {
-        sendreq = true;
+        rereq = true;
         const response = await fetch('http://localhost:5001/api/generate', {
           method: 'POST',
           headers: {
@@ -110,7 +112,8 @@ const Keyword = () => {
   return (
     <MainBody>
       <div>
-        <H1 content="원하는 상대방의 외모 조건들을 골라주세요." />
+        <H1 content="원하는 상대방의 외모 조건들을 선택해 주세요" />
+        <H2 content="다음 키워드는 선택하지 않아도 되며, 여러 개를 선택할 수도 있습니다.." />
       </div>
       <ButtonWrap>
         <ButtonContainer title="얼굴형">
