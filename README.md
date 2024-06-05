@@ -1,5 +1,5 @@
 # Chaki
-Here's the text formatted in Markdown for inclusion in your README file:
+To run it in your local device, you need to run in two terminals one for the backend server and one for the frontend.
 
 ### Setup and Run Instructions
 
