@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import PropTypes from 'prop-types';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Img = styled.img.attrs(props => ({
     src: props.src,
@@ -28,14 +28,13 @@ const ImgButton = styled.button`
     box-shadow: -0.6rem 0.6rem 0rem 0rem var(--shadow);
     border-radius: 1.5rem;
     max-width: 100%;
+    border: none;
+    background: none;
 `;
 
 const ImageContainer = ({ imageUrl, isSelected, handleImageSelection }) => {
-    const [isClicked, setIsClicked] = useState(false);
-
     const handleClick = () => {
         if (handleImageSelection) {
-            setIsClicked(!isClicked);
             handleImageSelection(imageUrl);
         }
     };
@@ -45,6 +44,12 @@ const ImageContainer = ({ imageUrl, isSelected, handleImageSelection }) => {
             <Img src={imageUrl} alt="Generated Image" isClicked={isSelected} />
         </ImgButton>
     );
+};
+
+ImageContainer.propTypes = {
+    imageUrl: PropTypes.string.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    handleImageSelection: PropTypes.func.isRequired
 };
 
 export { ImageContainer };

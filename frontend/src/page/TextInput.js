@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { H2 } from "../components/Text";
 import { SendBtn } from '../components/Btn';
+import { useNavigate } from 'react-router-dom';
 
 const StyledTextInput = styled.div`
   display: flex;
@@ -46,40 +47,37 @@ const ButtonContainer = styled.div`
 
 const TextInput = () => {
   const [inputText, setInputText] = useState("");
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   let reReq = false;
-
-
-  
 
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
-  const handleClick = () => {
-    console.log("Button clicked!");
-  };
-  // const handleClick = async () => {
-  //   if(!sendreq){
-  //     try {
-  //       sendreq = true;
-  //       const response = await fetch('http://localhost:5001/api/generateText', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ description: inputText }),
-  //       });
 
-  //       const data = await response.json();
-  //       if (data.imageUrl) {
-  //         navigate('/result', { state: { imageUrl: data.imageUrl } });
-  //       }
-  //     } catch (error) {
-  //       console.error('Error sending data:', error);
-  //     }
-  //   }  
-  // };
+  const handleClick = async () => {
+    navigate('/lovelanguage');
+
+    if (!reReq) {
+      reReq = true;
+      try {
+        const response = await fetch('http://localhost:5001/api/generateText', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inputText }),
+        });
+
+        const data = await response.json();
+        console.log(data);
+        window.sessionStorage.setItem('image_urls', JSON.stringify(data.imageUrls));
+      } catch (error) {
+        console.error('Error sending data:', error);
+      }
+    }
+  };
 
   return (
     <StyledTextInput>
@@ -88,7 +86,7 @@ const TextInput = () => {
       </div>
       <TextArea value={inputText} onChange={handleInputChange} placeholder='남자다운 스타일의 태닝된 얼굴이 좋아요!!!'/>
       <ButtonContainer>
-        <SendBtn text="입력 완료" onClickFunction={handleClick} />
+        <SendBtn text="입력 완료" onClick={handleClick} />
       </ButtonContainer>
     </StyledTextInput>
   );

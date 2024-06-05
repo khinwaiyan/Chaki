@@ -30,13 +30,13 @@ const ButtonWrap = styled.div`
 
 const ButtonContainerWrapper = styled.div`
   display: flex;
-  flex-wrap: nowrap; /* Ensure buttons stay in a single line */
+  flex-wrap: nowrap;
   gap: 1rem;
 `;
 
 const StyledButton = styled(Btn)`
-  flex: 1 1 auto; /* Allow buttons to shrink when necessary */
-  min-width: 0; /* Prevent buttons from being too wide */
+  flex: 1 1 auto;
+  min-width: 0;
 `;
 
 const ButtonContainer = ({ title, children }) => (
@@ -53,7 +53,11 @@ const Keyword = () => {
     얼굴형: [],
     피부색: [],
     눈: [],
+    눈썹: [],
     헤어: [],
+    코: [],
+    입: [],
+    입술: [],
     기타: [],
   });
 
@@ -76,7 +80,6 @@ const Keyword = () => {
     console.log(JSON.stringify(selectedValues));
     navigate('/lovelanguage');  
 
-
     try {
       const response = await fetch('http://localhost:5001/api/generate', {
         method: 'POST',
@@ -93,7 +96,7 @@ const Keyword = () => {
 
       const data = await response.json();
       console.log(data);
-      window.sessionStorage.setItem('image_url', data.imageUrl);
+      window.sessionStorage.setItem('imageUrls', JSON.stringify(data.imageUrls));
 
     } catch (error) {
       console.log(error);
@@ -103,10 +106,17 @@ const Keyword = () => {
   return (
     <MainBody>
       <div>
-        <H1 content="원하는 상대방의 외모 조건들을 골라주세요." />
+        <H1 content="원하는 상대방의 외모 조건들을 선택해 주세요" />
+        <H2 content="다음 키워드는 선택하지 않아도 되며, 여러 개를 선택할 수도 있습니다.." />
       </div>
       <ButtonWrap>
-        <ButtonContainer title="얼굴형">
+      <ButtonContainer title="얼굴형">
+          <StyledButton
+            text="계란형"
+            title="얼굴형"
+            isSelected={selectedValues.얼굴형.includes('계라형')}
+            onClickFunction={() => handleButtonClick('얼굴형', '계란형')}
+          />
           <StyledButton
             text="동근형"
             title="얼굴형"
@@ -114,93 +124,197 @@ const Keyword = () => {
             onClickFunction={() => handleButtonClick('얼굴형', '동근형')}
           />
           <StyledButton
-            text="계란형"
+            text="각진형"
             title="얼굴형"
-            isSelected={selectedValues.얼굴형.includes('계란형')}
-            onClickFunction={() => handleButtonClick('얼굴형', '계란형')}
-          />
-          <StyledButton
-            text="긴형"
-            title="얼굴형"
-            isSelected={selectedValues.얼굴형.includes('긴형')}
-            onClickFunction={() => handleButtonClick('얼굴형', '긴형')}
+            isSelected={selectedValues.얼굴형.includes('각진형')}
+            onClickFunction={() => handleButtonClick('얼굴형', '각진형')}
           />
         </ButtonContainer>
         <ButtonContainer title="피부색">
           <StyledButton
-            text="밝은피부"
+            text="백인 피부"
             title="피부색"
-            isSelected={selectedValues.피부색.includes('밝은피부')}
-            onClickFunction={() => handleButtonClick('피부색', '밝은피부')}
+            isSelected={selectedValues.피부색.includes('백인 같은 밝은 피부')}
+            onClickFunction={() => handleButtonClick('피부색', '백인 같은 밝은 피부')}
           />
           <StyledButton
-            text="올리브피부"
+            text="흑인 피부"
             title="피부색"
-            isSelected={selectedValues.피부색.includes('올리브피부')}
-            onClickFunction={() => handleButtonClick('피부색', '올리브피부')}
+            isSelected={selectedValues.피부색.includes('흑인 같은 매끄러운 피부')}
+            onClickFunction={() => handleButtonClick('피부색', '흑인 같은 매끄러운 피부')}
+          />
+          <StyledButton
+            text="동양인 피부"
+            title="피부색"
+            isSelected={selectedValues.피부색.includes('동양인 같은 노란끼있는 피부')}
+            onClickFunction={() => handleButtonClick('피부색', '동양인 같은 노란끼있는 피부')}
           />
         </ButtonContainer>
         <ButtonContainer title="눈">
-          <StyledButton
-            text="동그란눈"
+        <StyledButton
+            text="큰 눈"
             title="눈"
-            isSelected={selectedValues.눈.includes('동그란눈')}
-            onClickFunction={() => handleButtonClick('눈', '동그란눈')}
+            isSelected={selectedValues.눈.includes('큰 눈')}
+            onClickFunction={() => handleButtonClick('눈', '큰 눈')}
+          />
+          <StyledButton
+            text="보통 크기의 눈"
+            title="눈"
+            isSelected={selectedValues.눈.includes('보통 크기의 눈')}
+            onClickFunction={() => handleButtonClick('눈', '보통 크기의 눈')}
+          />
+          <StyledButton
+            text="작은 눈"
+            title="눈"
+            isSelected={selectedValues.눈.includes('작은 눈')}
+            onClickFunction={() => handleButtonClick('눈', '작은 눈')}
           />
           <StyledButton
             text="무쌍"
             title="눈"
             isSelected={selectedValues.눈.includes('무쌍')}
-            onClickFunction={() => handleButtonClick('눈', '무쌍')}
+            onClickFunction={() => handleButtonClick('눈', '무쌍 처럼 작은 눈')}
+          />
+          <StyledButton
+            text="유쌍"
+            title="눈"
+            isSelected={selectedValues.눈.includes('유쌍 처럼 큰 눈')}
+            onClickFunction={() => handleButtonClick('눈', '유쌍 처럼 큰 눈')}
           />
         </ButtonContainer>
-        <ButtonContainer title="헤어">
+        <ButtonContainer title="눈썹">
           <StyledButton
-            text="단발"
-            title="헤어"
-            isSelected={selectedValues.헤어.includes('단발')}
-            onClickFunction={() => handleButtonClick('헤어', '단발')}
+            text="두꺼운 눈썹"
+            title="눈썹"
+            isSelected={selectedValues.눈썹.includes('두꺼운 눈썹')}
+            onClickFunction={() => handleButtonClick('눈썹', '두꺼운 눈썹')}
           />
           <StyledButton
-            text="긴머리"
-            title="헤어"
-            isSelected={selectedValues.헤어.includes('긴머리')}
-            onClickFunction={() => handleButtonClick('헤어', '긴머리')}
+            text="보통 눈썹"
+            title="눈썹"
+            isSelected={selectedValues.눈썹.includes('보통 굵기의 눈썹')}
+            onClickFunction={() => handleButtonClick('눈썹', '보통 굵기의 눈썹')}
           />
           <StyledButton
-            text="중단발"
-            title="헤어"
-            isSelected={selectedValues.헤어.includes('중단발')}
-            onClickFunction={() => handleButtonClick('헤어', '중단발')}
+            text="얇은 눈썹"
+            title="눈썹"
+            isSelected={selectedValues.눈썹.includes('얇은 눈썹')}
+            onClickFunction={() => handleButtonClick('눈썹', '얇은 눈썹')}
           />
+        </ButtonContainer>
+        <ButtonContainer title="헤어스타일">
           <StyledButton
             text="짧은머리"
             title="헤어"
             isSelected={selectedValues.헤어.includes('짧은머리')}
             onClickFunction={() => handleButtonClick('헤어', '짧은머리')}
           />
+          <StyledButton
+            text="어깨 닿는 머리"
+            title="헤어스타일"
+            isSelected={selectedValues.헤어.includes('어깨를 닿는 길이의 머리')}
+            onClickFunction={() => handleButtonClick('헤어', '어깨를 닿는 길이의 머리')}
+          />
+          <StyledButton
+            text="긴머리"
+            title="헤어스타일"
+            isSelected={selectedValues.헤어.includes('긴머리')}
+            onClickFunction={() => handleButtonClick('헤어', '긴머리')}
+          />
+          <StyledButton
+            text="앞머리 있음"
+            title="헤어스타일"
+            isSelected={selectedValues.헤어.includes('앞머리 있음')}
+            onClickFunction={() => handleButtonClick('헤어', '앞머리 있음')}
+          />
+        </ButtonContainer>
+        <ButtonContainer title="코 모양">
+          <StyledButton
+            text="높은 코"
+            title="코 모양"
+            isSelected={selectedValues.코.includes('높은 코')}
+            onClickFunction={() => handleButtonClick('코', '높은 코')}
+          />
+          <StyledButton
+            text="긴 코"
+            title="코 모양"
+            isSelected={selectedValues.코.includes('긴 코')}
+            onClickFunction={() => handleButtonClick('코', '긴 코')}
+          />
+          <StyledButton
+            text="짧은 코"
+            title="코 모양"
+            isSelected={selectedValues.코.includes('짧은 코')}
+            onClickFunction={() => handleButtonClick('코', '짧은 코')}
+          />
+        </ButtonContainer>
+        <ButtonContainer title="입 모양">
+          <StyledButton
+            text="큰 입"
+            title="입 모양"
+            isSelected={selectedValues.입.includes('큰 입')}
+            onClickFunction={() => handleButtonClick('입', '큰 입')}
+          />
+          <StyledButton
+            text="보통 크기의 입"
+            title="입 모양"
+            isSelected={selectedValues.입.includes('보통 크기의 입')}
+            onClickFunction={() => handleButtonClick('입', '보통 크기의 입')}
+          />
+          <StyledButton
+            text="작은 입"
+            title="입 모양"
+            isSelected={selectedValues.입.includes('작은 입')}
+            onClickFunction={() => handleButtonClick('입', '작은 입')}
+          />
+        </ButtonContainer>
+        <ButtonContainer title="입술">
+          <StyledButton
+            text="두꺼운 입술"
+            title="입술"
+            isSelected={selectedValues.입술.includes('두꺼운 입술')}
+            onClickFunction={() => handleButtonClick('입술', '두꺼운 입술')}
+          />
+          <StyledButton
+            text="보통 입술"
+            title="입술"
+            isSelected={selectedValues.입술.includes('보통 입술')}
+            onClickFunction={() => handleButtonClick('입술', '보통 입술')}
+          />
+          <StyledButton
+            text="얇은 입술"
+            title="입술"
+            isSelected={selectedValues.입술.includes('얇은 입술')}
+            onClickFunction={() => handleButtonClick('입술', '얇은 입술')}
+          />
         </ButtonContainer>
         <ButtonContainer title="기타">
           <StyledButton
-            text="타투 있음"
-            title="기타"
-            isSelected={selectedValues.기타.includes('타투 있음')}
-            onClickFunction={() => handleButtonClick('기타', '타투 있음')}
-          />
-          <StyledButton
-            text="피어싱 있음"
-            title="기타"
-            isSelected={selectedValues.기타.includes('피어싱 있음')}
-            onClickFunction={() => handleButtonClick('기타', '피어싱 있음')}
-          />
-          <StyledButton
             text="안경 있음"
             title="기타"
-            isSelected={selectedValues.기타.includes('안경 있음')}
-            onClickFunction={() => handleButtonClick('기타', '안경 있음')}
+            isSelected={selectedValues.기타.includes('안경 을 쓴')}
+            onClickFunction={() => handleButtonClick('기타', '안경 을 쓴')}
+          />
+          <StyledButton
+            text="보조게 있음"
+            title="기타"
+            isSelected={selectedValues.기타.includes('얼굴에 보조개 있는')}
+            onClickFunction={() => handleButtonClick('기타', '얼굴에 보조개 있는')}
+          />
+          <StyledButton
+            text="수염 있음"
+            title="기타"
+            isSelected={selectedValues.기타.includes('수염 있는')}
+            onClickFunction={() => handleButtonClick('가타', '수염 있는')}
+          />
+          <StyledButton
+            text="얼굴에 점 있음"
+            title="기타"
+            isSelected={selectedValues.기타.includes('얼굴에 점 있는')}
+            onClickFunction={() => handleButtonClick('가타', '얼굴에 점 있는')}
           />
         </ButtonContainer>
-      </ButtonWrap>
+        </ButtonWrap>
       <SendBtn text="선택 완료" onClickFunction={handleSendData} />
     </MainBody>
   );

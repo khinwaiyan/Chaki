@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Btn,ToggleBtns } from '../components/Btn';
-import { H1, H2, H2Bold } from '../components/Text';
+import { H1, H1Bold, H2, H2Bold } from '../components/Text';
 
 const Wrapper = styled.div`
     padding: 6rem;
@@ -15,12 +15,13 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  padding: 2rem 0;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 4rem 0;
 `;
 
 
@@ -58,10 +59,10 @@ const Appearance = () => {
 
   return (
     <Wrapper>
-        <H2Bold content="STEP 1." />
-        <H1 content="원하는 이상형의 외모는?" />
+        <H1Bold content="STEP 1." />
+        <H2Bold content="원하는 이상형의 외모는?" />
     <ContentWrapper>
-        <H2 content="원하는 상대의 성을 골라주세요." />
+        <H1 content="원하는 상대방의 성을 선택해주세요." />
         <ButtonGroup>
         <ToggleBtns
           text1="남"
@@ -71,7 +72,7 @@ const Appearance = () => {
           upperHandle={handleGenderSelection}
         />
         </ButtonGroup>
-        <H2 content="외모 조건을 입력할 때 원하는 모드를 골라주세요." />
+        <H1 content="외모 조건을 입력할 때 원하는 모드를 골라주세요." />
         <ButtonGroup>
           <Btn 
             text="텍스트로 작성" 
