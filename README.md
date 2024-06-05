@@ -1,8 +1,7 @@
 # Chaki
 Here's the text formatted in Markdown for inclusion in your README file:
 
-```markdown
-## Setup and Run Instructions
+### Setup and Run Instructions
 
 ### For the Backend Server:
 
