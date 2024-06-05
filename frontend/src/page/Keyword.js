@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { H1, H2, H2Bold, P1, P2 } from "../components/Text";
+import { H1, H2 } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { Btn, SendBtn } from "../components/Btn";
 import styled from 'styled-components';
-
 
 const MainBody = styled.section`
   display: flex;
@@ -31,13 +30,13 @@ const ButtonWrap = styled.div`
 
 const ButtonContainerWrapper = styled.div`
   display: flex;
-  flex-wrap: nowrap; /* Ensure buttons stay in a single line */
+  flex-wrap: nowrap;
   gap: 1rem;
 `;
 
 const StyledButton = styled(Btn)`
-  flex: 1 1 auto; /* Allow buttons to shrink when necessary */
-  min-width: 0; /* Prevent buttons from being too wide */
+  flex: 1 1 auto;
+  min-width: 0;
 `;
 
 const ButtonContainer = ({ title, children }) => (
@@ -50,7 +49,6 @@ const ButtonContainer = ({ title, children }) => (
 );
 
 const Keyword = () => {
-  let rereq = false;
   const [selectedValues, setSelectedValues] = useState({
     얼굴형: [],
     피부색: [],
@@ -82,31 +80,27 @@ const Keyword = () => {
     console.log(JSON.stringify(selectedValues));
     navigate('/lovelanguage');  
 
-    if(!rereq){
-      try {
-        rereq = true;
-        const response = await fetch('http://localhost:5001/api/generate', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ data: selectedValues })
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network error');
-        }
-  
-        const data = await response.json();
-        console.log(data);
-        window.sessionStorage.setItem('image_url', data.imageUrl);
-  
-      } catch (error) {
-        console.log(error);
+    try {
+      const response = await fetch('http://localhost:5001/api/generate', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: selectedValues })
+      });
+
+      if (!response.ok) {
+        throw new Error('Network error');
       }
+
+      const data = await response.json();
+      console.log(data);
+      window.sessionStorage.setItem('imageUrls', JSON.stringify(data.imageUrls));
+
+    } catch (error) {
+      console.log(error);
     }
-    
   };
 
   return (
@@ -116,7 +110,7 @@ const Keyword = () => {
         <H2 content="다음 키워드는 선택하지 않아도 되며, 여러 개를 선택할 수도 있습니다.." />
       </div>
       <ButtonWrap>
-        <ButtonContainer title="얼굴형">
+      <ButtonContainer title="얼굴형">
           <StyledButton
             text="계란형"
             title="얼굴형"
@@ -320,7 +314,7 @@ const Keyword = () => {
             onClickFunction={() => handleButtonClick('가타', '얼굴에 점 있는')}
           />
         </ButtonContainer>
-      </ButtonWrap>
+        </ButtonWrap>
       <SendBtn text="선택 완료" onClickFunction={handleSendData} />
     </MainBody>
   );

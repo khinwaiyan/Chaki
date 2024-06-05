@@ -47,7 +47,7 @@ const generateImage = async (description) => {
 app.post('/api/generate', async (req, res) => {
   const { data } = req.body;
   const stringData = stringFormat(data);
-  const description = `${stringData} 를 만족하는 ${selectedGender} 한 명의 사진`;
+  const description = `${stringData} 등 외모 조건들을 가진 ${selectedGender} 한 명의 사진`;
   console.log('Received data from client:', description);
 
   try {
@@ -88,13 +88,8 @@ app.post('/api/generateText', async (req, res) => {
 // JSON format to String 
 const stringFormat = (data) => {
   return Object.entries(data)
-    .map(([key, values]) => {
-      if (Array.isArray(values)) {
-        return `${key}: ${values.join(', ')}`;
-      } else {
-        return `${key}: ${values}`;
-      }
-    })
+    .filter(([key, values]) => Array.isArray(values) && values.length > 0) // filter out empty arrays
+    .map(([key, values]) => `${key} ${values.join(', ')}`)
     .join(', ');
 };
 

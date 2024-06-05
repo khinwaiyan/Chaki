@@ -44,7 +44,8 @@ export default function ImageGeneration() {
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { imageUrls } = location.state;
+  const { imageUrls, language, description } = location.state;
+  console.log(`Image URLs: ${imageUrls}`);
 
   const handleImageSelection = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -56,7 +57,6 @@ export default function ImageGeneration() {
       alert("이상형 이미지를 선택해주세요.");
       return;
     } else {
-      const { language, description } = location.state;
       console.log(`Selected image: ${selectedImage}`);
       navigate('/result', { state: { selectedImage, language, description } });
     }
@@ -67,8 +67,8 @@ export default function ImageGeneration() {
       <H1Bold content="STEP 3." />
       <H2Bold content="이상형 이미지 후보 생성" />
       <ContentWrapper>
-      <H2 content="가장 마음에 드는 이미지를 선택해 주세요." />
-      <ImageGroup>
+        <H2 content="가장 마음에 드는 이미지를 선택해 주세요." />
+        <ImageGroup>
           {imageUrls.length > 0 ? (
             imageUrls.map((url, index) => (
               <ImageContainer
