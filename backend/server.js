@@ -89,7 +89,7 @@ app.post('/api/generateText', async (req, res) => {
 const stringFormat = (data) => {
   return Object.entries(data)
     .filter(([key, values]) => Array.isArray(values) && values.length > 0) // filter out empty arrays
-    .map(([key, values]) => `${key} ${values.join(', ')}`)
+    .map(([key, values]) => `${values.join(', ')}`)
     .join(', ');
 };
 

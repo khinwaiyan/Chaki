@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { H1Bold, H2, H2Bold } from "../components/Text";
+import { H1Bold, H2, H1, H2Bold } from "../components/Text";
 import { ImageContainer } from "../components/Image";
 import { SendBtn } from "../components/Btn";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -67,7 +67,7 @@ export default function ImageGeneration() {
       <H1Bold content="STEP 3." />
       <H2Bold content="이상형 이미지 후보 생성" />
       <ContentWrapper>
-        <H2 content="가장 마음에 드는 이미지를 선택해 주세요." />
+        <H1 content="가장 마음에 드는 이미지를 선택해 주세요." />
         <ImageGroup>
           {imageUrls.length > 0 ? (
             imageUrls.map((url, index) => (

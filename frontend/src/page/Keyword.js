@@ -78,7 +78,6 @@ const Keyword = () => {
   const handleSendData = async () => {
     console.log("click");
     console.log(JSON.stringify(selectedValues));
-    navigate('/lovelanguage');  
 
     try {
       const response = await fetch('http://localhost:5001/api/generate', {
@@ -97,6 +96,8 @@ const Keyword = () => {
       const data = await response.json();
       console.log(data);
       window.sessionStorage.setItem('imageUrls', JSON.stringify(data.imageUrls));
+      navigate('/lovelanguage');  
+
 
     } catch (error) {
       console.log(error);
@@ -146,8 +147,8 @@ const Keyword = () => {
           <StyledButton
             text="동양인 피부"
             title="피부색"
-            isSelected={selectedValues.피부색.includes('동양인 같은 노란끼있는 피부')}
-            onClickFunction={() => handleButtonClick('피부색', '동양인 같은 노란끼있는 피부')}
+            isSelected={selectedValues.피부색.includes('동양인 같은 피부')}
+            onClickFunction={() => handleButtonClick('피부색', '동양인 같은 있는 피부')}
           />
         </ButtonContainer>
         <ButtonContainer title="눈">
