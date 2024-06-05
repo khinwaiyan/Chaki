@@ -20,7 +20,7 @@ app.post('/api/gender', (req, res) => {
   const { gender } = req.body;
   selectedGender = gender;
   console.log('Received gender:', gender);
-  res.sendStatus(200); 
+  res.sendStatus(200);
 });
 
 // Function to generate a single image
@@ -28,9 +28,9 @@ const generateImage = async (description) => {
   const response = await axios.post(
     'https://api.openai.com/v1/images/generations',
     {
-      model: 'dall-e-3', 
+      model: 'dall-e-3',
       prompt: description,
-      n: 1,  
+      n: 1,
       size: "1024x1024"
     },
     {
@@ -41,11 +41,11 @@ const generateImage = async (description) => {
     }
   );
   return response.data.data[0].url;
-}
+};
 
 // Route to receive description and generate images
 app.post('/api/generate', async (req, res) => {
-  const { data } = req.body; 
+  const { data } = req.body;
   const stringData = stringFormat(data);
   const description = `${stringData} 를 만족하는 ${selectedGender} 한 명의 사진`;
   console.log('Received data from client:', description);
@@ -55,7 +55,26 @@ app.post('/api/generate', async (req, res) => {
     const imageUrl2 = await generateImage(description);
 
     res.json({ imageUrls: [imageUrl1, imageUrl2] });
-    
+
+  } catch (error) {
+    console.error('Error generating images:', error.response ? error.response.data : error.message);
+    if (!res.headersSent) {
+      res.status(500).json({ error: error.response ? error.response.data : error.message });
+    }
+  }
+});
+// Route to receive input text and generate images
+app.post('/api/generateText', async (req, res) => {
+  const { inputText } = req.body;
+  const description = inputText;
+  console.log('Received input text from client:', description);
+
+  try {
+    const imageUrl1 = await generateImage(description);
+    const imageUrl2 = await generateImage(description);
+
+    res.json({ imageUrls: [imageUrl1, imageUrl2] });
+
   } catch (error) {
     console.error('Error generating images:', error.response ? error.response.data : error.message);
     if (!res.headersSent) {
@@ -64,10 +83,20 @@ app.post('/api/generate', async (req, res) => {
   }
 });
 
-//json format to String 
-const stringFormat = (data) =>{
- return Object.entries(data).map(([key, values]) => `${key}: ${values.join(', ')}`).join(', ');
-} 
+
+
+// JSON format to String 
+const stringFormat = (data) => {
+  return Object.entries(data)
+    .map(([key, values]) => {
+      if (Array.isArray(values)) {
+        return `${key}: ${values.join(', ')}`;
+      } else {
+        return `${key}: ${values}`;
+      }
+    })
+    .join(', ');
+};
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
