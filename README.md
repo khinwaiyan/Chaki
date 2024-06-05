@@ -61,5 +61,3 @@ To run it in your local device, you need to run in two terminals one for the bac
    npm start
    ```
 ```
-
-This Markdown text will display correctly formatted instructions when viewed in a Markdown viewer or editor.
