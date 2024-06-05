@@ -1,5 +1,4 @@
 npm install styled-components
 npm install react-router-dom
 npm install react-icons
-npm install axios express body-parser cors dotenv
 npm install axios
