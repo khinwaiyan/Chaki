@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { H1Bold, H2, H2Bold } from "../components/Text";
 import { ImageContainer } from "../components/Image";
 import { SendBtn } from "../components/Btn";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from 'axios';
 
 const Wrapper = styled.div`
   padding: 6rem;
@@ -43,47 +42,25 @@ const ImageGroup = styled.div`
 
 export default function ImageGeneration() {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await axios.post('http://localhost:5001/api/generate', {
-          data: location.state.description
-        });
-        if (response.data && response.data.imageUrls) {
-          setImageUrls(response.data.imageUrls);
-        } else {
-          setImageUrls([]); // Set to empty array if response does not have imageUrls
-        }
-      } catch (error) {
-        console.error('Error fetching images:', error.response ? error.response.data : error.message);
-        alert('Failed to fetch images from the backend.');
-        setImageUrls([]); // Set to empty array on error
-      }
-    };
-
-    fetchImages();
-  }, [location.state.description]);
+  const { imageUrls } = location.state;
 
   const handleImageSelection = (imageUrl) => {
     setSelectedImage(imageUrl);
     console.log(`Selected image: ${imageUrl}`);
-  }
+  };
 
   const handleNavigation = () => {
     if (selectedImage === null) {
       alert("이상형 이미지를 선택해주세요.");
       return;
     } else {
-      const language = location.state.language;
-      const description = location.state.description;
+      const { language, description } = location.state;
       console.log(`Selected image: ${selectedImage}`);
       navigate('/result', { state: { selectedImage, language, description } });
-    }  
-  }
+    }
+  };
 
   return (
     <Wrapper>
@@ -98,7 +75,8 @@ export default function ImageGeneration() {
                 key={index}
                 handleImageSelection={handleImageSelection}
                 isSelected={selectedImage === url}
-                imageUrl={url} />
+                imageUrl={url}
+              />
             ))
           ) : (
             <p>Loading images...</p>
@@ -109,5 +87,5 @@ export default function ImageGeneration() {
         </div>
       </ContentWrapper>
     </Wrapper>
-  )
+  );
 }
