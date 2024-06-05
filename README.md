@@ -60,4 +60,3 @@ To run it in your local device, you need to run in two terminals one for the bac
    ```sh
    npm start
    ```
-```
