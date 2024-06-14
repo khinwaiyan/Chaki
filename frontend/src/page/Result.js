@@ -70,7 +70,6 @@ export default function Result() {
             <div style={{height: 1 + 'rem'}}></div>
             <ButtonGroup>
                 <SendBtn text="다시하기" onClickFunction={handleGoBack} />
-                <SendBtn text="결과 스크린샷" onClickFunction={handleScreenShot} />
             </ButtonGroup>
         </Wrapper>
     )
