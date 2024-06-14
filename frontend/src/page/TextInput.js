@@ -49,17 +49,13 @@ const TextInput = () => {
   const [inputText, setInputText] = useState("");
   const navigate = useNavigate();
 
-  let reReq = false;
+  
 
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
 
   const handleClick = async () => {
-    navigate('/lovelanguage');
-
-    if (!reReq) {
-      reReq = true;
       try {
         const response = await fetch('http://localhost:5001/api/generateText', {
           method: 'POST',
@@ -72,11 +68,12 @@ const TextInput = () => {
 
         const data = await response.json();
         console.log(data);
-        window.sessionStorage.setItem('image_urls', JSON.stringify(data.imageUrls));
+        window.sessionStorage.setItem('imageUrls', JSON.stringify(data.imageUrls));
+        navigate('/lovelanguage');
       } catch (error) {
         console.error('Error sending data:', error);
       }
-    }
+    
   };
 
   return (
@@ -86,7 +83,7 @@ const TextInput = () => {
       </div>
       <TextArea value={inputText} onChange={handleInputChange} placeholder='남자다운 스타일의 태닝된 얼굴이 좋아요!!!'/>
       <ButtonContainer>
-        <SendBtn text="입력 완료" onClick={handleClick} />
+        <SendBtn text="입력 완료" onClickFunction={handleClick} />
       </ButtonContainer>
     </StyledTextInput>
   );
