@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { H1, H2 } from "../components/Text";
+import { H1, H2, H2Bold, P1, P2 } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { Btn, SendBtn } from "../components/Btn";
 import styled from 'styled-components';
+
 
 const MainBody = styled.section`
   display: flex;
@@ -49,6 +50,7 @@ const ButtonContainer = ({ title, children }) => (
 );
 
 const Keyword = () => {
+  let rereq = false;
   const [selectedValues, setSelectedValues] = useState({
     얼굴형: [],
     피부색: [],
