@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { H1, H2, H2Bold, P1, P2 } from "../components/Text";
+import { H1, H1Bold, H2, H2Bold, P1, P2 } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { Btn, SendBtn } from "../components/Btn";
 import styled from 'styled-components';
+import loadingGif from '../assets/loading.gif'; 
 
 
 const MainBody = styled.section`
@@ -40,6 +41,20 @@ const StyledButton = styled(Btn)`
   min-width: 0;
 `;
 
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LoadingGif = styled.img`
+  display: block;
+  margin: 2rem auto;
+  width: 60vh; 
+  height: 60vh; 
+`;
+
 const ButtonContainer = ({ title, children }) => (
   <div>
     <H2 content={title} />
@@ -62,6 +77,8 @@ const Keyword = () => {
     입술: [],
     기타: [],
   });
+  const [loading, setLoading] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -80,6 +97,8 @@ const Keyword = () => {
   const handleSendData = async () => {
     console.log("click");
     console.log(JSON.stringify(selectedValues));
+    setLoading(true);
+
 
     try {
       const response = await fetch('http://localhost:5001/api/generate', {
@@ -103,11 +122,23 @@ const Keyword = () => {
 
     } catch (error) {
       console.log(error);
+    }finally {
+      setLoading(false);
     }
   };
 
   return (
     <MainBody>
+      {loading ? (
+        <LoadingContainer>
+
+        <H1Bold content="이미지 생성 중입니다. 잠시만 기다려주세요." />
+        <LoadingGif src={loadingGif} alt="Loading..." />
+        </LoadingContainer>
+      ) : (
+      <>
+      
+    
       <div>
         <H1 content="원하는 상대방의 외모 조건들을 선택해 주세요" />
         <H2 content="다음 키워드는 선택하지 않아도 되며, 여러 개를 선택할 수도 있습니다.." />
@@ -319,6 +350,8 @@ const Keyword = () => {
         </ButtonContainer>
         </ButtonWrap>
       <SendBtn text="선택 완료" onClickFunction={handleSendData} />
+      </>
+      )}
     </MainBody>
   );
 };
