@@ -66,7 +66,8 @@ app.post('/api/generate', async (req, res) => {
 // Route to receive input text and generate images
 app.post('/api/generateText', async (req, res) => {
   const { inputText } = req.body;
-  const description = inputText;
+  const description = `${inputText}  외모 조건들을 가진 ${selectedGender} 한 명의 사진`;
+  
   console.log('Received input text from client:', description);
 
   try {
