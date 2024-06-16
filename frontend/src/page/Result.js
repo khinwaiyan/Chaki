@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
     display: flex;
+    background-color: var(--bg); 
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -82,11 +83,13 @@ export default function Result() {
     return (
         <Wrapper>
             <H1 content="당신의 이상형은 바로..." />
-            <ContentWrapper id="screenshot-target">
-                <ImageContainer imageUrl={location.state.selectedImage} />
-                <BtnWithBody title={"사랑의 언어 - " + location.state.language} text={location.state.description} shadow = {false} />
-            </ContentWrapper>
-            <div style={{height: 1 + 'rem'}}></div>
+            <div id="screenshot-target">
+                <ContentWrapper>
+                    <ImageContainer imageUrl={location.state.selectedImage} />
+                    <BtnWithBody title={"사랑의 언어 - " + location.state.language} text={location.state.description} shadow = {false} />
+                </ContentWrapper>
+                <div style={{height: 1 + 'rem'}}></div>
+            </div>
             <ButtonGroup>
                 <SendBtn text="다시하기" onClickFunction={handleGoBack} />
                 <SendBtn text="결과 스크린샷" onClickFunction={handleScreenShot} />
