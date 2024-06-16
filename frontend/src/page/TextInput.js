@@ -70,6 +70,11 @@ const TextInput = () => {
   };
 
   const handleClick = async () => {
+    if (inputText.length < 10) {
+      alert("입력된 텍스트는 10자 이상이어야 합니다.");
+      return;
+    }
+    
     setLoading(true);
     try {
       const response = await fetch('http://localhost:5001/api/generateText', {
