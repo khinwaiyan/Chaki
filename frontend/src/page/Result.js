@@ -3,6 +3,7 @@ import { H1 } from "../components/Text";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ImageContainer } from "../components/Image";
 import { BtnWithBody, SendBtn } from "../components/Btn";
+import html2canvas from 'html2canvas';
 
 const Wrapper = styled.div`
     padding: 6rem;
@@ -56,20 +57,39 @@ export default function Result() {
         navigate("/");
     }
 
-    const handleScreenShot = () => {
-        alert("스크린샷을 저장합니다.");
+    const handleScreenShot = async () => {
+        const element = document.getElementById('screenshot-target');
+        if (element) {
+            const canvas = await html2canvas(element, {
+                useCORS: true, 
+                allowTaint: true,
+                logging: true,
+            });
+            const imgData = canvas.toDataURL('image/png');
+    
+            // Create a link and trigger a download
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = 'screenshot.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert("스크린샷을 저장할 요소를 찾을 수 없습니다.");
+        }
     }
 
     return (
         <Wrapper>
             <H1 content="당신의 이상형은 바로..." />
-            <ContentWrapper>
+            <ContentWrapper id="screenshot-target">
                 <ImageContainer imageUrl={location.state.selectedImage} />
                 <BtnWithBody title={"사랑의 언어 - " + location.state.language} text={location.state.description} shadow = {false} />
             </ContentWrapper>
             <div style={{height: 1 + 'rem'}}></div>
             <ButtonGroup>
                 <SendBtn text="다시하기" onClickFunction={handleGoBack} />
+                <SendBtn text="결과 스크린샷" onClickFunction={handleScreenShot} />
             </ButtonGroup>
         </Wrapper>
     )
