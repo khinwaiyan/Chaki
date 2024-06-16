@@ -54,7 +54,11 @@ const Appearance = () => {
   };
 
   const handleNavigation = (path) => {
-    navigate(path);
+      if(!selectedGender){
+      alert('성별을 선택하세요.');
+      return;
+      }
+      navigate(path);
   };
 
   return (
