@@ -2,3 +2,4 @@ npm install styled-components
 npm install react-router-dom
 npm install react-icons
 npm install axios
+npm install html2canvas
