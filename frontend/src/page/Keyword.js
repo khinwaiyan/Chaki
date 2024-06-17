@@ -335,18 +335,6 @@ const Keyword = () => {
             isSelected={selectedValues.기타.includes('얼굴에 보조개 있는')}
             onClickFunction={() => handleButtonClick('기타', '얼굴에 보조개 있는')}
           />
-          <StyledButton
-            text="수염 있음"
-            title="기타"
-            isSelected={selectedValues.기타.includes('수염 있는')}
-            onClickFunction={() => handleButtonClick('가타', '수염 있는')}
-          />
-          <StyledButton
-            text="얼굴에 점 있음"
-            title="기타"
-            isSelected={selectedValues.기타.includes('얼굴에 점 있는')}
-            onClickFunction={() => handleButtonClick('가타', '얼굴에 점 있는')}
-          />
         </ButtonContainer>
         </ButtonWrap>
       <SendBtn text="선택 완료" onClickFunction={handleSendData} />
